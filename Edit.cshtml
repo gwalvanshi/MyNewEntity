@@ -1,0 +1,301 @@
+﻿@model GEE.Web.ViewModel.Admin.AspNetUserViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    <style type="text/css">
+        .form-control-sm {
+            height: 30px !important;
+        }
+
+        input[type=text]:disabled {
+            background: #dddddd;
+        }
+    </style>
+
+
+
+    <title>IMS</title>
+}
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container-fluid border ">
+        <div class="row">
+
+            <div id="toastmsg"><p class="yellow">Fill all mandatory feilds (*)..</p></div>
+
+            <div class="col-md-12 border-left p-3 bg-light">
+                <h5 class="pb-2 text-center text-uppercase font-weight-bold"> USER MANAGEMENT </h5>
+
+                <div class="mb-3">
+                    
+
+
+                    <div class="pb-2">
+                        <h6 class="py-1"><i class="fas fa-user-circle mr-2"></i>@Resource.UserGroup1401lblheaderaccountInformation</h6>
+                        <div class="row bg-white border mx-auto py-2 mb-2">
+                            <div class="input-div">
+                                <label class="input-header">@Resource.UserGroup1401lblUserType </label>
+                                <select class="form-control form-control-sm input-value" id="UserGroup1401lmdUserType" title="@Resource.UserGroup1401lttUserType" disabled="disabled">
+                                    <option>Select</option>
+
+                                </select>
+                            </div>
+                            <div class="input-div">
+                                <label class="input-header">@Resource.UserGroup1401lblStaff_ID_OR_Student_ID</label>
+                                <input class="input-value float-left" type="text" maxlength="100" placeholder="@Resource.UserGroup1401lblStaff_ID_OR_Student_ID" disabled="disabled" readonly="readonly" id="UserGroup1401lmdStaff_ID_OR_Student_ID" title="@Resource.UserGroup1401lttStaff_ID_OR_StudentID">
+                                <input type="hidden" id="txtStudentId">
+                                <a href="#" class="iconbtn float-right bg-info" id="btnPopup"><i class="fas fa-search"></i></a>
+
+
+
+                            </div>
+                            <div class="input-div">
+                                <label class="input-header">@Resource.UserGroup1401lblFirstName </label>
+                                <input class="input-value" type="text" placeholder="@Resource.UserGroup1401lblFirstName" id="UserGroup1401lmdFirstName" onchange=" return IsValidCharacters('UserGroup1401lmdFirstName', 'Only alpha numeric')" maxlength="50" title="@Resource.UserGroup1401lttFirstName">
+                            </div>
+                            <div class="input-div">
+                                <label class="input-header">@Resource.UserGroup1401lblLastName </label>
+                                <input class="input-value" type="text" placeholder="@Resource.UserGroup1401lblLastName" id="UserGroup1401lmdLastName" onchange=" return IsValidCharacters('UserGroup1401lmdLastName', 'Only alpha numeric')" maxlength="50" title="@Resource.UserGroup1401lttLastName">
+                            </div>
+                            <div class="input-div">
+                                <label class="input-header">@Resource.UserGroup1401lblEmailID </label>
+                                <input class="input-value" type="text" placeholder="@Resource.UserGroup1401lblEmailID" id="UserGroup1401lmdEmailID" name="email" maxlength="50" title="@Resource.UserGroup1401lttEmailID">
+                            </div>
+                            <div class="input-div">
+                                <label class="input-header">@Resource.UserGroup1401lblPhoneNumber </label>
+                                <input class="input-value" type="text" placeholder="@Resource.UserGroup1401lblPhoneNumber" id="UserGroup1401lmdPhoneNumber" OnPaste="return ValidatePasteNumeric(false, this)" onkeypress=" return AllowNumbersOnly(false,this,'Numeric only')" maxlength="10" title="@Resource.UserGroup1401lttPhoneNumber">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="pb-2">
+                        <h6 class="py-1"><i class="fas fa-sign-in-alt mr-2"></i>@Resource.UserGroup1401lblheaderLoginInformation</h6>
+                        <div class="row bg-white border mx-auto py-2 mb-2">
+                            <div class="input-div">
+                                <label class="input-header"><i class="fas fa-user-tie mr-2"></i>@Resource.UserGroup1401lblLoginID </label>
+                                <input class="input-value" type="text" placeholder="@Resource.UserGroup1401lblLoginID" onchange="return IsDataExist(this,'Duplicate data')" id="UserGroup1401lmdLoginID" maxlength="50" title="@Resource.UserGroup1401lttLoginID">
+                            </div>
+                            <div class="input-div">
+                                <label class="input-header"><i class="fas fa-user-tie mr-2"></i>@Resource.UserGroup1401lblPassword </label>
+                                <input class="input-value" type="Password" placeholder="@Resource.UserGroup1401lblPassword" id="UserGroup1401lmdPassword" maxlength="12" title="@Resource.UserGroup1401lttPassword" readonly="readonly">
+                            </div>
+                            <div class="input-div">
+                                <label class="input-header"><i class="fas fa-user-tie mr-2"></i>@Resource.UserGroup1401lblconfirmpassword </label>
+                                <input class="input-value" type="Password" placeholder="@Resource.UserGroup1401lblconfirmpassword" id="UserGroup1401lmdconfirmpassword" maxlength="12" title="@Resource.UserGroup1401lttPassword" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="pb-2">
+                        <h6 class="py-1"><i class="fas fa-user-lock mr-2"></i>@Resource.UserGroup1401lblheaderPermission</h6>
+                        <div class="row bg-white border mx-auto py-2 mb-2">
+                            <div class="input-div">
+                                <label class="input-header">@Resource.UserGroup1401lblGroup </label>
+                                <select class="form-control form-control-sm input-value" id="UserGroup1401lmdGroup" title="@Resource.UserGroup1401lttGroup">
+                                    <option>Select</option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pb-2">
+                        <h6 class="py-1"><i class="fas fa-user-lock mr-2"></i>Profile Photo</h6>
+                        <div class="row bg-white border mx-auto py-2 mb-2">
+                            <div class="input-div">
+                                <table style="padding-left:10px;">
+                                    <tr>
+                                        <td>
+                                            <label class="input-header">Select Photo </label>
+                                            <input type="file" name="UploadedFile" id="file-upload" />
+                                        </td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="input-header" id="lblfileName"></label>
+                                                
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="form-group">
+                                                <button class="mybtndark" type="button" id="btnProfilePhoto" onclick="Uploadocument();"><i class="far fa-save"></i>Attach Photo</button>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="pb-2">
+                        <div class="form-group">
+                            <div>
+                                <input type="hidden" id="CUserId" value="@TempData["CUserId"]" />
+                                <input type="hidden" id="hdnProfilePhotoPath" />
+                                <button class="mybtndark" type="button" id="UserSubmit"><i class="far fa-save mr-2"></i>@Resource.UserGroup1410btnSave</button>
+                                <button class="mybtndark" type="button" onclick="FormControlValueClear(true);"><i class="far fa-close mr-2"></i>@Resource.UserGroup1410btnCancel</button>
+                                <a href="/Start/Erp/Index?Id=10015">
+                                    <button class="mybtndark" type="button">
+                                        <i class="far fa-list mr-2"></i>Back To List
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="modal" tabindex="-1" id="loginModal"
+             data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <div>
+                            <div id="Ptoastmsg"><p class="yellow"></p></div>
+                            <h4 class="modal-title" id="headerValue"></h4>
+                            <input id="hdnlookupId" type="hidden" />
+                            <input id="hdnlooupName" type="hidden" />
+                        </div>
+                        <div class="row bg-white border mx-auto py-2 mb-2" style="text-align:center;">
+                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                <div class="form-group form-group-sm">
+                                    <input class="form-control form-control-sm" id="txtSearch" name="name" placeholder="Search Data" type="text" />
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                <div class="form-group form-group-sm">
+                                    <button class="mybtn" type="button" onclick="SearchPopupData()"><i class="fas fa-search mr-2"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="tblPopup" class="table table-striped table-bordered table-sm table-hover" style="width:100%">
+                                <thead class="bg-blue text-white">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Select</th>
+                                        <th>@Resource.GEE1401POPName</th>
+                                        <th>@Resource.GEE1401POPLastName</th>
+                                        <th>@Resource.GEE1401POPFatherName</th>
+                                        <th>@Resource.GEE1401POPPhonenum</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary button button4" id="btnAdd" onclick="AddData();">OK</button>
+                        <button type="button" id="btnHideModal" class="btn btn-primary button button4">
+                            Cancel
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+    .modal-dialog {
+        position: relative;
+        display: table; /* <-- This makes the trick */
+        overflow-y: auto;
+        overflow-x: auto;
+        width: auto;
+        min-width: 800px;
+    }
+    /*Css to target the dropdownbox*/
+    ul.ui-autocomplete {
+        color: black !important;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+    }
+</style>
+<script type="text/javascript">
+   // $(document).tooltip();
+    //Resource Variable Declaration Start
+    var ValidEmail = "@Resource.IsValidEmail";
+    var ValidContactNumber = "@Resource.IsValidContactNumber";
+    var PwdCompare = "@Resource.UserGroup1401MsgPassword";
+
+    //End
+
+    function Uploadocument()
+    {
+
+     var folderDetails = "";
+               folderDetails = $("#CUserId").val();
+            var fileUpload = $("#file-upload").get(0);
+           
+            var files = fileUpload.files;
+            if(files.length>0)
+            {
+
+            // Create FormData object
+            var fileData = new FormData();
+
+            // Looping over all files and add it to FormData object
+            for (var i = 0; i < files.length; i++) 
+            {
+                fileData.append(files[i].name, files[i]);
+            }
+
+            //We will change the below logic later error handling
+            $.ajax({
+                url: '/UserCreation/UploadDocument?userID=' + folderDetails,
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: fileData,//{ 'fileData': fileData, 'id': submissionid},
+                beforeSend: function (request) {
+                 request.setRequestHeader('ASGMapping_Id', sessionStorage.getItem('ASGMapping_Id'));request.setRequestHeader('SgMapping_id', sessionStorage.getItem('SgMapping_id'));
+                },
+                success: function (result)
+                {  
+                   
+                   if(result.ErrorMessage==undefined)
+                    {
+                        
+                       $("#hdnProfilePhotoPath").val(result);
+                       $("#lblfileName").text("File Name: "+files[0].name);
+                       
+                    }
+                    else
+                    {
+                         alert(result.ErrorMessage);
+                    }
+                }
+              
+
+            });
+            }
+    }
+</script>
+<script src="~/Scripts/DevScripts/Common/Common.js"></script>
+
+<script src="~/Scripts/DevScripts/AdminUser/UserCreate.js"></script>
+
